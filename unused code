@@ -1,0 +1,5 @@
+bot.setInterval(async () => {
+    dcmd = bot.commands.get(`deploy`);
+    dcmd.run(bot, depstat);
+    depstat = 0;
+}, 300);

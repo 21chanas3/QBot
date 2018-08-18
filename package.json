@@ -1,0 +1,16 @@
+{
+    "name": "Zero",
+    "version": "2.0.0",
+    "description": "Main Bot for Valiea 2.0",
+    "main": "bot.js",
+    "author": "Qubd",
+    "license": "ISC",
+    "dependencies": {
+        "discord.js": "^11.0.0",
+        "mysql": "^2.15.0",
+        "nodemon": "^1.18.3"
+    },
+    "scripts": {
+        "start": "nodemon bot.js"
+    }
+}
