@@ -23,17 +23,27 @@ fs.readdir("./commands/", (err, files) => {
     });
 });
 
+var initcon = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "10202003",
+});
+initcon.connect(err => {
+    if (err) throw err;
+});
+initcon.query("CREATE DATABASE IF NOT EXISTS bot;")
+
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "10202003",
     database: "bot"
 });
-
 con.connect(err => {
     if (err) throw err;
     console.log("Database connection established")
 });
+initializeTables();
 bot.on("ready", async () => {
     console.log(`Bot is ready! ${bot.user.username}`);
     bot.user.setActivity('mutinies.net', { type: 'PLAYING' })
@@ -51,3 +61,8 @@ bot.on("message", async message => {
     if (cmd) cmd.run(bot, message, args, con);
 });
 bot.login(Settings.token);
+
+function initializeTables(){
+    con.query("CREATE TABLE IF NOT EXISTS tickets (id INT, userID VARCHAR(40), state INT, staff VARCHAR(40), channel VARCHAR(40))")
+    con.query("CREATE TABLE IF NOT EXISTS invite (userId VARCHAR(40), ticketId INT, code INT, used INT, issuerId VARCHAR(40), channelId VARCHAR(40))")
+}
