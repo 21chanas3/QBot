@@ -23,10 +23,11 @@ fs.readdir("./commands/", (err, files) => {
     });
 });
 
-var initcon = mysql.createConnection({
+var intcon = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "10202003",
+    user: "u2629_8U7NtBilJb",
+    password: "j88+HnzcKD!N3NiBDff=G4MG",
+    database: "bot"
 });
 initcon.connect(err => {
     if (err) throw err;
@@ -35,8 +36,8 @@ initcon.query("CREATE DATABASE IF NOT EXISTS bot;")
 
 var con = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "10202003",
+    user: "u2629_8U7NtBilJb",
+    password: "j88+HnzcKD!N3NiBDff=G4MG",
     database: "bot"
 });
 con.connect(err => {
@@ -46,12 +47,13 @@ con.connect(err => {
 initializeTables();
 bot.on("ready", async () => {
     console.log(`Bot is ready! ${bot.user.username}`);
-    bot.user.setActivity('mutinies.net', { type: 'PLAYING' })
+    bot.user.setActivity('The Cancellation Game', { type: 'PLAYING' })
 });
 bot.on("message", async message => {
     if (message.author.bot) return;
     if (message.channel.type === "dm") return message.channel.send("Commands are only avaliable in servers!");
-    if (!message.content.startsWith(Settings.prefix)) return;   
+    if (!message.content.startsWith(Settings.prefix)) return; 
+    if (!message.member.hasPermission('ADMINISTRATOR')) return;  
     let messageArray = message.content.split(" ");
     let command = messageArray[0];
     let args = messageArray.slice(1);
@@ -63,6 +65,5 @@ bot.on("message", async message => {
 bot.login(Settings.token);
 
 function initializeTables(){
-    con.query("CREATE TABLE IF NOT EXISTS tickets (id INT, userID VARCHAR(40), state INT, staff VARCHAR(40), channel VARCHAR(40))")
-    con.query("CREATE TABLE IF NOT EXISTS invite (userId VARCHAR(40), ticketId INT, code INT, used INT, issuerId VARCHAR(40), channelId VARCHAR(40))")
+    con.query("CREATE TABLE IF NOT EXISTS data (id INT, userID VARCHAR(40), cancels INT", "cancelRole VARCHAR(40)")
 }
